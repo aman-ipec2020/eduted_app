@@ -1,1 +1,1 @@
-java $JAVA_OPTS -jar target/SASH_Banking_Application-0.0.1-SNAPSHOT.war --server.port=$PORT $JAR_OPTS
+web:    java $JAVA_OPTS -war target/webservices-0.0.1-SNAPSHOT.war --port $PORT target/*.war

@@ -1,1 +1,0 @@
-# eduted_app

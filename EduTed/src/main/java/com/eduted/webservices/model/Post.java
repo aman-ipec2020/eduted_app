@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -40,7 +42,9 @@ public class Post implements Serializable
 	
 	@Transient
 	private List<Tags> tags;				//	List of Tags in the Content(Video)
-	@Transient
+
+	
+	@OneToMany(mappedBy="post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Comment> commentList;		//	List of Comments in the Content(Video)
 	
 	private int reportCount;				//	No. of Reports in the Content(Video)
@@ -51,7 +55,7 @@ public class Post implements Serializable
 	public Post()	{	}
 
 	public Post(String postId, Profile profile, String video, int likesCount, int commentCount, int shareCount,
-			int viewCount, List<Tags> tags, List<Comment> commentList, int reportCount, Date date_time) {
+			int viewCount, List<Tags> tags, int reportCount, Date date_time) {
 		this.postId = postId;
 		this.profile = profile;
 		this.video = video;
@@ -60,23 +64,9 @@ public class Post implements Serializable
 		this.shareCount = shareCount;
 		this.viewCount = viewCount;
 		this.tags = tags;
-		this.commentList = commentList;
 		this.reportCount = reportCount;
 		this.date_time = date_time;
 	}
-
-
-	public String getPostId() 				{	return postId;			}
-	public Profile getProfile() 			{	return profile;			}
-	public String getVideo() 				{	return video;			}
-	public int getLikesCount() 				{	return likesCount;		}
-	public int getCommentCount() 			{	return commentCount;	}
-	public int getShareCount() 				{	return shareCount;		}
-	public int getViewCount() 				{	return viewCount;		}
-	public List<Tags> getTags() 			{	return tags;			}
-	public List<Comment> getCommentList() 	{	return commentList;		}
-	public int getReportCount() 			{	return reportCount;		}
-	public Date getDate_time() 				{	return date_time;		}
 
 
 	public Post setPostId(String postId) 					{	this.postId = postId;				return this;	}
@@ -90,5 +80,25 @@ public class Post implements Serializable
 	public Post setCommentList(List<Comment> commentList)	{	this.commentList = commentList;		return this;	}
 	public Post setReportCount(int reportCount) 			{	this.reportCount = reportCount;		return this;	}
 	public Post setDate_time(Date date_time) 				{	this.date_time = date_time;			return this;	}
+	
+	public String getPostId() 				{	return postId;			}
+	public Profile getProfile() 			{	return profile;			}
+	public String getVideo() 				{	return video;			}
+	public int getLikesCount() 				{	return likesCount;		}
+	public int getCommentCount() 			{	return commentCount;	}
+	public int getShareCount() 				{	return shareCount;		}
+	public int getViewCount() 				{	return viewCount;		}
+	public List<Tags> getTags() 			{	return tags;			}
+	public List<Comment> getCommentList() 	{	return commentList;		}
+	public int getReportCount() 			{	return reportCount;		}
+	public Date getDate_time() 				{	return date_time;		}
 
+
+	@Override
+	public String toString() {
+		return "Post [postId=" + postId + ", profile=" + profile + ", video=" + video + ", likesCount=" + likesCount
+				+ ", commentCount=" + commentCount + ", shareCount=" + shareCount + ", viewCount=" + viewCount
+				+ ", tags=" + tags + ", commentList=" + commentList + ", reportCount=" + reportCount + ", date_time="
+				+ date_time + "]";
+	}
 }

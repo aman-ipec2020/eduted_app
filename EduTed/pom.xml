@@ -17,7 +17,25 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<github.global.server>github</github.global.server>
 	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub OWNER Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/aman-ipec2020/eduTed</url>
+		</repository>
+		<snapshotRepository>
+			<id>github</id>
+			<url>file://${project.build.directory}/staging/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:git@github.com:aman-ipec2020/eduTed.git</connection>
+		<tag>HEAD</tag>
+	</scm>
 
 	<dependencies>
 		<dependency>
@@ -72,15 +90,58 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>eduted.maven.releases</id>
+			<url>http://raw:github.com/aman-ipec2020/eduTed/master</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+	
 	<build>
+		<extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+            </extension>
+        </extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-				</configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+       			</configuration>
+			</plugin>
+			
+			<plugin>
+					<!-- https://mvnrepository.com/artifact/com.github.github/site-maven-plugin -->
+				    <groupId>com.github.github</groupId>
+				    <artifactId>site-maven-plugin</artifactId>
+				    <version>0.12</version>
+				    <configuration>
+						<outputDirectory>${project.build.directory}/staging/</outputDirectory>
+						<includes>
+							<include>**/*</include>
+						</includes>
+						<repositoryOwner>aman-ipec2020</repositoryOwner>
+						<repositoryName>eduTed</repositoryName>
+						<branch>refs/heads/master</branch>
+						<message>Deploy artificst for ${project.version}</message>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>site</goal>
+							</goals>
+							<phase>deploy</phase>
+						</execution>
+					</executions>	
 			</plugin>
 		</plugins>
 	</build>

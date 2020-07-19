@@ -35,9 +35,9 @@ public class Profile implements Serializable
 
 
 	@OneToMany(mappedBy="profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@Transient
 	private List<Post> postList;
-	
+
+
 	@Transient
 	private List<Post> favouritePostList;
 	@Transient

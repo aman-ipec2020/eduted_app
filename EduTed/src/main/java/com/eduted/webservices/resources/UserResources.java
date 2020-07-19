@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eduted.webservices.model.User;
-//import com.eduted.webservices.services.ProfileService;
 import com.eduted.webservices.services.UserService;
 
+
+//import com.eduted.webservices.services.ProfileService;
+
 @RestController
-@RequestMapping("eduted/users")
+//@RequestMapping("eduted/users")
 public class UserResources
 {
 	@Autowired
@@ -51,7 +53,7 @@ public class UserResources
 		return new ResponseEntity<String> (userServices.getUserById(id), HttpStatus.OK);
 	}
 
-	@GetMapping("user")
+	@GetMapping("users")
 	public ResponseEntity<List<User>> searchAllUser()
 	{
 		return new ResponseEntity<List<User>> (userServices.getAllUsers(), HttpStatus.OK);
